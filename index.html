@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmographia | Lexicon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Site Header -->
+        <header class="site-header">
+            <span class="site-title" onclick="navigateTo('home')">COSMOGRAPHIA</span>
+            <span class="site-subtitle">The Universal Lexicon</span>
+        </header>
+
+        <!-- Home View (Search & Map Placeholder) -->
+        <section id="home-view" class="view-section">
+            <div class="search-container">
+                <input type="text" id="concept-search" placeholder="Search the Archipelago..." autocomplete="off">
+                <div id="search-results" class="search-results"></div>
+            </div>
+            <div class="start-instruction">Press Enter to search</div>
+        </section>
+
+        <!-- Core View (Definition) -->
+        <main id="core-view" class="view-section core-view hidden">
+            <!-- Sidebar / Exclusions -->
+            <aside class="sidebar-exclusions">
+                <div class="sidebar-header">Exclusions</div>
+                <ul id="exclusion-list">
+                    <!-- Dynamic Content -->
+                </ul>
+            </aside>
+
+            <!-- Center Stage / Definition Block -->
+            <section class="definition-stage">
+                <header class="concept-header">
+                    <div class="concept-meta">
+                        <span class="concept-id">LEX-0001</span>
+                        <span class="concept-genus">GENUS: <span id="genus-value"></span></span>
+                    </div>
+                    <h1 id="concept-label" class="concept-title"></h1>
+                </header>
+
+                <div class="definition-text" id="definition-text">
+                    <!-- Dynamic Content -->
+                </div>
+
+                <div class="constraints-container">
+                    <h3>Logical Constraints</h3>
+                    <div class="constraints-grid" id="constraints-active">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+
+                <div class="comparisons-container">
+                    <h3>Architecture of Difference</h3>
+                    <div id="comparisons-list">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+
+                <div class="visual-container">
+                    <h3>Visual Visualization</h3>
+                    <div id="vector-diagram" class="vector-stage">
+                        <!-- SVG Rendering -->
+                    </div>
+                    <div class="diagram-caption">Result = [Book]</div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Example Drawer -->
+        <footer class="example-drawer" id="example-drawer">
+            <div class="drawer-handle" onclick="toggleDrawer()">
+                <span>Examples / Details on Demand</span>
+            </div>
+            <div class="drawer-content" id="example-list">
+                <!-- Dynamic Content -->
+            </div>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
