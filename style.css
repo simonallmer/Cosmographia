@@ -376,3 +376,13 @@ body {
     font-size: 0.9rem;
     line-height: 1.4;
 }
+
+/* Embed Mode */
+body.embed-mode .site-header {
+    display: none !important;
+}
+
+body.embed-mode .core-view,
+body.embed-mode .view-section {
+    height: 100vh;
+}

@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Determine start view. If URL has hash, load that. Otherwise Home.
     // For this prototype, we'll start at Home.
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('embed') === 'true') {
+        document.body.classList.add('embed-mode');
+    }
+
     navigateTo('home');
     setupSearch();
     renderSVG(); // Pre-render SVG or render when needed
