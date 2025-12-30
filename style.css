@@ -231,7 +231,18 @@ body {
     text-align: center;
     line-height: 1.2;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.launch-date {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 500;
 }
 
 .home-illustration {
@@ -639,4 +650,85 @@ body.embed-mode .view-section {
     border-top: 1px solid var(--border-color);
     padding-top: 1.5rem;
     font-style: italic;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        min-height: 100dvh;
+        overflow: auto;
+    }
+
+    #app {
+        height: auto;
+        min-height: 100dvh;
+    }
+
+    .site-header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .header-left {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .site-title {
+        font-size: 1.4rem;
+    }
+
+    .home-scroll-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .home-title {
+        font-size: 1.8rem;
+    }
+
+    .concept-title {
+        font-size: 2.5rem;
+        word-wrap: break-word;
+    }
+
+    .definition-stage {
+        padding: 2rem 1.5rem;
+    }
+
+    .core-view {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    .sidebar-exclusions {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem;
+        height: auto;
+    }
+
+    .view-section {
+        height: auto;
+        overflow: visible;
+    }
+
+    #home-view {
+        overflow: visible;
+        height: auto;
+    }
+
+    .drawer-content {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+    }
+
+    .example-drawer.open {
+        height: auto;
+        max-height: 80dvh;
+    }
 }
