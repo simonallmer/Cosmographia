@@ -1,10 +1,24 @@
 :root {
-    --bg-color: #0A0A0A;
-    --text-primary: #E0E0E0;
-    --text-secondary: #A0A0A0;
-    --accent-color: #00FFAB;
-    --border-color: #333333;
-    --font-sans: 'Inter', sans-serif;
+    /* Palette: 19th Century Paper & Ink */
+    --bg-color: #F8F5F1;
+    /* Aged paper / Parchment */
+    --surface-color: #F1ECE6;
+    /* Slightly darker header/sidebar */
+    --text-primary: #1A1A1A;
+    /* Near black ink */
+    --text-secondary: #4A4A4A;
+    /* Charcoal */
+    --accent-color: #8B0000;
+    /* Deep Oxblood Red - typical of old encyclopedias */
+    --accent-secondary: #1C3B57;
+    /* Navy Blue for links/secondary highlights */
+    --border-color: #D1CDC7;
+    --border-strong: #8C8C8C;
+
+    /* Fonts */
+    --font-heading: 'Libre Baskerville', serif;
+    --font-title: 'Cinzel', serif;
+    --font-body: 'Lora', serif;
     --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -17,12 +31,13 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     height: 100vh;
     overflow: hidden;
-    /* App-like feel */
+    /* App-like structure maintained, but visual style changed */
     display: flex;
     flex-direction: column;
+    /* Optional: Subtle texture could be added here, but user asked for no cheap gimmicks */
 }
 
 #app {
@@ -34,8 +49,10 @@ body {
 
 /* Site Header */
 .site-header {
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    padding: 1.5rem 2rem;
+    border-bottom: 3px double var(--border-strong);
+    /* Double line for classic feel */
     flex-shrink: 0;
     display: flex;
     justify-content: space-between;
@@ -44,44 +61,56 @@ body {
 
 .header-left {
     display: flex;
-    align-items: baseline;
+    flex-direction: row;
+    align-items: center;
     gap: 1rem;
-}
-
-.site-title {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.5px;
-    color: var(--text-primary);
     cursor: pointer;
 }
 
-.site-title:hover {
-    color: var(--accent-color);
+.site-logo {
+    color: var(--text-primary);
+    flex-shrink: 0;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.site-title {
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    /* Removed underline animations as requested */
 }
 
 .site-subtitle {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    /* text-transform: uppercase; Removed as per request "written regularly" */
-    letter-spacing: 1px;
+    letter-spacing: 0;
 }
 
 .back-link {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-primary);
     text-decoration: none;
-    border: 1px solid var(--border-color);
-    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-strong);
+    padding: 0.4rem 0.8rem;
     transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
 }
 
 .back-link:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
+    background-color: var(--text-primary);
+    color: var(--bg-color);
 }
 
 /* Views */
@@ -97,44 +126,60 @@ body {
 
 /* Home View */
 #home-view {
+    display: block;
+    overflow-y: auto;
+    padding: 0;
+    height: 100%;
+    background-image: linear-gradient(to right,
+            transparent 0%,
+            transparent 49.9%,
+            var(--border-color) 50%,
+            transparent 50.1%,
+            transparent 100%);
+    background-size: 100% 100%;
+    /* Optional vertical divider effect if we went 2-col, but sticking to single col scroll for now */
+    background-image: none;
+    /* Removing for cleaner look */
+}
+
+.home-scroll-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100%;
-    padding-bottom: 20vh;
-    /* Visual optical center */
+    background-color: var(--bg-color);
+    min-height: 100%;
+    border-left: 1px solid transparent;
+    /* Placeholder for layout changes */
+    border-right: 1px solid transparent;
 }
+
+/* Styles handled below for scrolling support */
 
 .search-container {
     width: 100%;
-    max-width: 600px;
+    margin-bottom: 3rem;
     position: relative;
-    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--text-primary);
 }
 
 #concept-search {
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 2px solid var(--text-secondary);
     color: var(--text-primary);
-    font-family: var(--font-mono);
-    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 1.8rem;
     padding: 0.5rem 0;
     outline: none;
     text-align: center;
-    transition: border-color 0.3s ease;
 }
 
-#concept-search:focus {
-    border-bottom-color: var(--accent-color);
-}
-
-.start-instruction {
-    font-family: var(--font-mono);
-    color: var(--text-secondary);
-    font-size: 0.8rem;
+#concept-search::placeholder {
+    color: var(--border-strong);
     opacity: 0.6;
 }
 
@@ -143,27 +188,155 @@ body {
     top: 100%;
     left: 0;
     width: 100%;
-    background: #111;
-    border: 1px solid var(--border-color);
-    max-height: 200px;
+    background: var(--bg-color);
+    border: 1px solid var(--text-primary);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+    max-height: 300px;
     overflow-y: auto;
     display: none;
     z-index: 100;
 }
 
 .search-result-item {
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     border-bottom: 1px solid var(--border-color);
     cursor: pointer;
-    font-family: var(--font-mono);
-    color: var(--text-secondary);
+    font-family: var(--font-body);
+    color: var(--text-primary);
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
+}
+
+.search-result-item span:first-child {
+    font-weight: 600;
 }
 
 .search-result-item:hover {
-    background: #1a1a1a;
+    background: var(--surface-color);
     color: var(--accent-color);
+}
+
+.home-content {
+    width: 100%;
+    text-align: left;
+}
+
+.home-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.home-illustration {
+    display: block;
+    max-width: 100%;
+    width: 600px;
+    height: auto;
+    margin: 2rem auto;
+    mix-blend-mode: multiply;
+    /* Blends parchment background into page */
+    border: none;
+    padding: 0;
+    background: transparent;
+}
+
+.small-illustration {
+    width: 350px;
+}
+
+.home-subtitle {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color);
+    /* Underline section headers */
+    display: inline-block;
+    padding-bottom: 0.2rem;
+}
+
+.home-text {
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.8;
+    /* Comfortable reading */
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    text-align: justify;
+    /* Newspaper feel */
+}
+
+/* Drop cap for the first paragraph */
+.home-text:first-of-type::first-letter {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.5rem;
+    margin-top: 0.1rem;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.concept-stats {
+    text-align: center;
+    margin: 2rem auto;
+    padding: 0.5rem;
+    border: 1px solid var(--text-primary);
+    display: inline-block;
+    width: 100%;
+    background: var(--surface-color);
+}
+
+.stat-value {
+    color: var(--accent-color);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-style: italic;
+    text-transform: capitalize;
+    font-variant: small-caps;
+    letter-spacing: 1px;
+}
+
+.home-list {
+    list-style: none;
+    padding-left: 0;
+    border-left: 2px solid var(--border-color);
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+}
+
+.home-list li {
+    margin-bottom: 1rem;
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.accent-text {
+    color: var(--accent-secondary);
+    /* Navy blue for terms */
+    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    margin-right: 0.3rem;
 }
 
 /* Core View Layout */
@@ -175,21 +348,26 @@ body {
 
 /* Sidebar */
 .sidebar-exclusions {
-    width: 250px;
+    width: 280px;
+    background-color: var(--surface-color);
     border-right: 1px solid var(--border-color);
     padding: 2rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
     display: flex;
     flex-direction: column;
 }
 
 .sidebar-header {
+    font-family: var(--font-heading);
     text-transform: uppercase;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
+    font-weight: 700;
     letter-spacing: 1px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 0.5rem;
 }
 
 #exclusion-list {
@@ -197,23 +375,26 @@ body {
 }
 
 .exclusion-item {
-    margin-bottom: 1rem;
-    padding-left: 1rem;
-    border-left: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    padding-left: 0;
     color: var(--text-secondary);
-    transition: all 0.2s ease;
 }
 
-.exclusion-item:hover {
-    border-left-color: var(--accent-color);
-    color: var(--text-primary);
+.exclusion-item div:first-child {
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    /* Red "Not a..." */
+    font-weight: 700;
+    font-style: italic;
+    margin-bottom: 0.2rem;
 }
 
 .exclusion-target {
-    color: var(--accent-color);
+    color: var(--text-primary);
     display: block;
-    font-size: 0.75rem;
-    margin-top: 0.2rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    font-family: var(--font-body);
 }
 
 /* Center Stage */
@@ -221,135 +402,172 @@ body {
     flex: 1;
     padding: 4rem 6rem;
     overflow-y: auto;
-    max-width: 1200px;
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
 }
 
 /* Typography & Header */
 .concept-meta {
     font-family: var(--font-mono);
-    color: var(--accent-color);
-    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
 }
 
 .concept-title {
-    font-size: 4rem;
-    font-weight: 300;
+    font-family: var(--font-heading);
+    font-size: 4.5rem;
+    font-weight: 700;
+    /* Bold serif */
     margin-bottom: 2rem;
-    letter-spacing: -1px;
+    color: var(--text-primary);
+    letter-spacing: -2px;
 }
 
 .definition-text {
-    font-size: 1.5rem;
-    line-height: 1.5;
+    font-family: var(--font-body);
+    font-size: 1.4rem;
+    line-height: 1.6;
     margin-bottom: 3rem;
-    font-weight: 300;
+    color: var(--text-primary);
+    border-left: 4px solid var(--text-primary);
+    padding-left: 2rem;
 }
 
 /* Constraints */
 .constraints-container {
     margin-bottom: 3rem;
-    border-top: 1px solid var(--border-color);
+    border-top: 3px double var(--border-strong);
     padding-top: 2rem;
 }
 
 .constraints-container h3,
 .comparisons-container h3,
 .visual-container h3 {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--text-primary);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .constraints-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+    gap: 0;
+    /* Gap handled by borders */
+    border: 1px solid var(--text-primary);
 }
 
 .constraint-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: transparent;
     border: 1px solid var(--border-color);
-    padding: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+    padding: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    /* Grid feel */
+    margin: -1px -1px 0 0;
 }
 
 .constraint-attr {
     color: var(--text-secondary);
     display: block;
     margin-bottom: 0.5rem;
+    font-variant: small-caps;
+    letter-spacing: 1px;
 }
 
 .constraint-val {
-    color: var(--accent-color);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
     font-weight: 700;
+    font-size: 1.1rem;
 }
 
 .constraint-fail {
     display: block;
-    margin-top: 0.5rem;
-    color: #FF4A4A;
-    font-size: 0.7rem;
+    margin-top: 0.8rem;
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    font-style: italic;
 }
 
 /* Comparisons */
 .structural-comparison {
-    margin-bottom: 1.5rem;
-    padding-left: 1.5rem;
-    border-left: 2px solid var(--border-color);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .comparison-header {
-    font-family: var(--font-mono);
+    font-family: var(--font-heading);
     font-weight: 700;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
 }
 
 .comparison-text {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
 /* Visual Container */
 .vector-stage {
     width: 100%;
-    height: 300px;
-    /* Fixed height for diagram */
-    border: 1px solid var(--border-color);
-    background: #0F0F0F;
+    height: 350px;
+    border: 3px double var(--text-primary);
+    background: #FFFEFA;
+    /* Slightly cleaner white for diagram */
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+/* Add a corner ornamentation or label to the chart */
+.vector-stage::after {
+    content: "FIG. 1";
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
 .diagram-caption {
-    font-family: var(--font-mono);
+    font-family: var(--font-heading);
+    font-style: italic;
     text-align: center;
-    margin-top: 0.5rem;
-    color: var(--accent-color);
-    font-size: 0.8rem;
+    margin-top: 0.8rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
 }
 
 /* Example Drawer */
 .example-drawer {
-    background: #0E0E0E;
-    border-top: 1px solid var(--border-color);
+    /* Hidden by default on home via JS, handled here for layout */
+    background: var(--surface-color);
+    border-top: 3px double var(--border-strong);
     transition: height 0.3s ease;
     height: 50px;
-    /* Collapsed height */
+    flex-shrink: 0;
+    /* Don't shrink */
 }
 
 .example-drawer.open {
-    height: 300px;
+    height: 350px;
 }
 
 .drawer-handle {
@@ -358,11 +576,15 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--text-primary);
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-weight: 700;
+    background: var(--bg-color);
+    /* Tab look */
+    border-bottom: 1px solid var(--border-color);
 }
 
 .drawer-handle:hover {
@@ -370,34 +592,51 @@ body {
 }
 
 .drawer-content {
-    padding: 2rem;
+    padding: 3rem 6rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 3rem;
     overflow-y: auto;
     height: calc(100% - 50px);
 }
 
 .example-card {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--text-primary);
     padding: 1.5rem;
+    background: var(--bg-color);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.05);
 }
 
 .example-title {
-    font-family: var(--font-mono);
+    font-family: var(--font-heading);
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
 }
 
 .example-desc {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    line-height: 1.4;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-family: var(--font-body);
 }
 
 /* Embed Mode */
 body.embed-mode .core-view,
 body.embed-mode .view-section {
     height: 100vh;
+}
+
+.home-footer {
+    margin-top: 4rem;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    font-style: italic;
 }

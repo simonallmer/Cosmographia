@@ -9,20 +9,28 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateTo('home');
     setupSearch();
     renderSVG(); // Pre-render SVG or render when needed
+
+    // Update Home Stats
+    const count = Object.keys(COSMOGRAPHIA_DATA).length;
+    const countEl = document.getElementById('total-concepts-count');
+    if (countEl) countEl.textContent = count;
 });
 
 function navigateTo(viewId, conceptId = null) {
     const homeView = document.getElementById('home-view');
     const coreView = document.getElementById('core-view');
+    const exampleDrawer = document.getElementById('example-drawer');
 
     if (viewId === 'home') {
         homeView.classList.remove('hidden');
         coreView.classList.add('hidden');
+        if (exampleDrawer) exampleDrawer.style.display = 'none';
         document.getElementById('concept-search').value = '';
         document.getElementById('concept-search').focus();
     } else if (viewId === 'concept') {
         homeView.classList.add('hidden');
         coreView.classList.remove('hidden');
+        if (exampleDrawer) exampleDrawer.style.display = 'block';
         if (conceptId) loadConcept(conceptId);
     }
 }
@@ -165,15 +173,17 @@ function toggleDrawer() {
 function renderSVG() {
     const stage = document.getElementById('vector-diagram');
     // Simple SVG representation of a Book: Rectangle + Binding Lines + n>=49
+    // Styled as a technical drawing
     const svgNS = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(svgNS, "svg");
     svg.setAttribute("width", "300");
     svg.setAttribute("height", "200");
     svg.setAttribute("viewBox", "0 0 300 200");
 
-    // Palette
-    const accent = "#00FFAB";
-    const primary = "#E0E0E0";
+    // Palette (Ink)
+    const inkPrimary = "#1A1A1A";
+    const inkAccent = "#8B0000"; // Oxblood
+    const inkFaint = "#8C8C8C";
 
     // 1. Rectangle (The Substrate)
     const rect = document.createElementNS(svgNS, "rect");
@@ -182,7 +192,7 @@ function renderSVG() {
     rect.setAttribute("width", "100");
     rect.setAttribute("height", "140");
     rect.setAttribute("fill", "none");
-    rect.setAttribute("stroke", primary);
+    rect.setAttribute("stroke", inkPrimary);
     rect.setAttribute("stroke-width", "2");
     svg.appendChild(rect);
 
@@ -193,8 +203,8 @@ function renderSVG() {
     line.setAttribute("y1", "20");
     line.setAttribute("x2", lineX);
     line.setAttribute("y2", "160");
-    line.setAttribute("stroke", accent);
-    line.setAttribute("stroke-width", "1");
+    line.setAttribute("stroke", inkAccent);
+    line.setAttribute("stroke-width", "1.5"); // Slightly thicker
     svg.appendChild(line);
 
     const line2 = document.createElementNS(svgNS, "line");
@@ -202,16 +212,16 @@ function renderSVG() {
     line2.setAttribute("y1", "20");
     line2.setAttribute("x2", lineX + 5);
     line2.setAttribute("y2", "160");
-    line2.setAttribute("stroke", accent);
-    line2.setAttribute("stroke-width", "1");
+    line2.setAttribute("stroke", inkAccent);
+    line2.setAttribute("stroke-width", "1.5");
     svg.appendChild(line2);
 
     // 3. n >= 49 text
     const text = document.createElementNS(svgNS, "text");
     text.setAttribute("x", "150");
-    text.setAttribute("y", "180");
+    text.setAttribute("y", "185");
     text.setAttribute("text-anchor", "middle");
-    text.setAttribute("fill", accent);
+    text.setAttribute("fill", inkPrimary);
     text.setAttribute("font-family", "JetBrains Mono");
     text.setAttribute("font-size", "12");
     text.textContent = "{ n ≥ 49 }";
@@ -224,7 +234,7 @@ function renderSVG() {
         pageLine.setAttribute("y1", 25 + (i * 1));
         pageLine.setAttribute("x2", 195 - (i * 2));
         pageLine.setAttribute("y2", 155 - (i * 1));
-        pageLine.setAttribute("stroke", "#333");
+        pageLine.setAttribute("stroke", inkFaint);
         pageLine.setAttribute("stroke-width", "1");
         svg.appendChild(pageLine);
     }
