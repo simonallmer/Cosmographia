@@ -107,6 +107,7 @@ function loadConcept(uid) {
     // 1. Header & Genus
     document.getElementById('concept-label').textContent = data.label;
     document.getElementById('genus-value').textContent = data.genus;
+    document.getElementById('domain-value').textContent = data.relations.map_coordinates.domain;
 
     // 2. Definition
     document.getElementById('definition-text').textContent = data.definition.primary_text;

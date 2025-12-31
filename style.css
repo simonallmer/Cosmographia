@@ -432,6 +432,17 @@ body {
     padding-bottom: 0.5rem;
 }
 
+.concept-domain,
+.concept-genus {
+    color: var(--accent-secondary);
+}
+
+#domain-value,
+#genus-value {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
 .concept-title {
     font-family: var(--font-heading);
     font-size: 4.5rem;
@@ -650,6 +661,18 @@ body.embed-mode .view-section {
     border-top: 1px solid var(--border-color);
     padding-top: 1.5rem;
     font-style: italic;
+}
+
+.home-footer a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.home-footer a:hover {
+    color: var(--accent-secondary);
+    text-decoration: underline;
 }
 
 /* Mobile Responsiveness */
