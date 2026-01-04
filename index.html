@@ -46,7 +46,7 @@
 
                 <div class="home-content">
                     <h1 class="home-title">A Cartography of Everything</h1>
-                    <div class="launch-date">Launching February 2026</div>
+                    <div class="launch-date">Draft Version | Launching February 2026</div>
 
                     <h2 class="home-subtitle">The Mission</h2>
                     <p class="home-text">Cosmographia is a deterministic lexicon designed to bring
@@ -73,19 +73,26 @@
                     <p class="home-text">The lexicon is organized into seven Domains, each representing a
                         fundamental dimension of reality:</p>
                     <ul class="home-list">
-                        <li><strong class="accent-text">Materia: The Physical Domain.</strong> The realm of atoms,
+                        <li onclick="navigateTo('domain', 'Materia')"><strong class="accent-text">Materia: The Physical
+                                Domain.</strong> The realm of atoms,
                             energy, and the tangible world.</li>
-                        <li><strong class="accent-text">Logica: The Formal Domain.</strong> The domain of
+                        <li onclick="navigateTo('domain', 'Logica')"><strong class="accent-text">Logica: The Formal
+                                Domain.</strong> The domain of
                             mathematics, reason, and self-evident truths.</li>
-                        <li><strong class="accent-text">Technica: The Artificial Domain.</strong> The landscape of
+                        <li onclick="navigateTo('domain', 'Technica')"><strong class="accent-text">Technica: The
+                                Artificial Domain.</strong> The landscape of
                             human ingenuity, from ancient tools to digital systems.</li>
-                        <li><strong class="accent-text">Psyche: The Internal Domain.</strong> The territory of the
+                        <li onclick="navigateTo('domain', 'Psyche')"><strong class="accent-text">Psyche: The Internal
+                                Domain.</strong> The territory of the
                             mind, encompassing emotions, memory, and consciousness.</li>
-                        <li><strong class="accent-text">Societas: The Inter-Relational Domain.</strong> The
+                        <li onclick="navigateTo('domain', 'Societas')"><strong class="accent-text">Societas: The
+                                Inter-Relational Domain.</strong> The
                             architecture of human agreement—law, status, and collective value.</li>
-                        <li><strong class="accent-text">Aesthetica: The Expressive Domain.</strong> The study of
+                        <li onclick="navigateTo('domain', 'Aesthetica')"><strong class="accent-text">Aesthetica: The
+                                Expressive Domain.</strong> The study of
                             form, harmony, and the sensory experience of beauty.</li>
-                        <li><strong class="accent-text">Chronos: The Temporal Domain.</strong> The lineage of eras
+                        <li onclick="navigateTo('domain', 'Chronos')"><strong class="accent-text">Chronos: The Temporal
+                                Domain.</strong> The lineage of eras
                             and events, mapping our position in the flow of time.</li>
                     </ul>
 
@@ -109,6 +116,22 @@
             <!-- Removed separate start-instruction as it's less relevant with full content -->
         </section>
 
+        <!-- Domain View -->
+        <section id="domain-view" class="view-section hidden">
+            <div class="domain-scroll-container">
+                <header class="domain-header">
+                    <h1 id="domain-title" class="domain-title"></h1>
+                    <p id="domain-description" class="domain-text"></p>
+                </header>
+                <div class="domain-content">
+                    <h2 class="section-subtitle">Concepts in this Domain</h2>
+                    <div id="domain-concepts-container" class="domain-listing">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Core View (Definition) -->
         <main id="core-view" class="view-section core-view hidden">
             <!-- Sidebar / Exclusions -->
@@ -123,11 +146,13 @@
             <section class="definition-stage">
                 <header class="concept-header">
                     <div class="concept-meta">
-                        <span class="concept-id">LEX-0001</span>
-                        <span class="concept-domain">DOMAIN: <span id="domain-value"></span></span>
+                        <span class="concept-id">LEX-XXXX</span>
+                        <span class="concept-domain">DOMAIN: <span id="domain-value"
+                                class="clickable-domain"></span></span>
                         <span class="concept-genus">GENUS: <span id="genus-value"></span></span>
                     </div>
                     <h1 id="concept-label" class="concept-title"></h1>
+                    <div id="concept-hierarchy" class="concept-hierarchy"></div>
                 </header>
 
                 <div class="definition-text" id="definition-text">
@@ -137,6 +162,13 @@
                 <div class="constraints-container">
                     <h3>Logical Constraints</h3>
                     <div class="constraints-grid" id="constraints-active">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+
+                <div class="essential-container">
+                    <h3>Essential Components</h3>
+                    <div id="essential-list">
                         <!-- Dynamic Content -->
                     </div>
                 </div>
@@ -161,7 +193,7 @@
         <!-- Example Drawer -->
         <footer class="example-drawer" id="example-drawer">
             <div class="drawer-handle" onclick="toggleDrawer()">
-                <span>Examples / Details on Demand</span>
+                <span>Examples</span>
             </div>
             <div class="drawer-content" id="example-list">
                 <!-- Dynamic Content -->

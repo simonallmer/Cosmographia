@@ -471,6 +471,7 @@ body {
 }
 
 .constraints-container h3,
+.essential-container h3,
 .comparisons-container h3,
 .visual-container h3 {
     font-family: var(--font-heading);
@@ -521,6 +522,33 @@ body {
     color: var(--accent-color);
     font-size: 0.8rem;
     font-style: italic;
+}
+
+/* Essential Components */
+.essential-container {
+    margin-bottom: 3rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.component-item {
+    margin-bottom: 1.5rem;
+}
+
+.component-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent-secondary);
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.component-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 /* Comparisons */
@@ -754,4 +782,147 @@ body.embed-mode .view-section {
         height: auto;
         max-height: 80dvh;
     }
+}
+
+/* Domain View Styles */
+#domain-view {
+    display: block;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.domain-scroll-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+}
+
+.domain-header {
+    border-bottom: 3px double var(--border-strong);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.domain-title {
+    font-family: var(--font-title);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.domain-text {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.domain-listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.domain-concept-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.domain-concept-card:hover {
+    border-color: var(--accent-color);
+    background: var(--bg-color);
+    transform: translateY(-5px);
+    box-shadow: 5px 5px 0px var(--accent-color);
+}
+
+.concept-card-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.concept-card-genus {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Hierarchy Styles */
+.concept-hierarchy {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.hierarchy-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.hierarchy-link {
+    color: var(--accent-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.hierarchy-link:hover {
+    border-bottom-color: var(--accent-secondary);
+    color: var(--accent-color);
+}
+
+.hierarchy-separator {
+    opacity: 0.5;
+}
+
+.subordinate-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.clickable-domain {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: var(--border-color);
+    transition: color 0.2s;
+}
+
+.clickable-domain:hover {
+    color: var(--accent-color);
+}
+
+.home-list li {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.home-list li:hover .accent-text {
+    color: var(--accent-color);
 }
