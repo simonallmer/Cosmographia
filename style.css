@@ -277,11 +277,6 @@ body {
     /* Helps "push" off-white background to pure white for better multiply blending */
     border: none;
     padding: 0;
-    transition: transform 0.3s ease;
-}
-
-.home-emblem:hover {
-    transform: scale(1.02);
 }
 
 .home-illustration {
@@ -374,10 +369,70 @@ body {
 }
 
 .home-list li {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.8rem 1rem;
     font-family: var(--font-body);
     color: var(--text-primary);
     line-height: 1.6;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.domain-materia-bg {
+    background-color: rgba(139, 0, 0, 0.05);
+}
+
+.domain-logica-bg {
+    background-color: rgba(28, 59, 87, 0.05);
+}
+
+.domain-technica-bg {
+    background-color: rgba(0, 100, 0, 0.05);
+}
+
+.domain-psyche-bg {
+    background-color: rgba(128, 0, 128, 0.05);
+}
+
+.domain-societas-bg {
+    background-color: rgba(218, 165, 32, 0.08);
+}
+
+.domain-aesthetica-bg {
+    background-color: rgba(219, 112, 147, 0.08);
+}
+
+.domain-chronos-bg {
+    background-color: rgba(101, 67, 33, 0.06);
+}
+
+.domain-materia-bg:hover {
+    background-color: rgba(139, 0, 0, 0.08);
+}
+
+.domain-logica-bg:hover {
+    background-color: rgba(28, 59, 87, 0.08);
+}
+
+.domain-technica-bg:hover {
+    background-color: rgba(0, 100, 0, 0.08);
+}
+
+.domain-psyche-bg:hover {
+    background-color: rgba(128, 0, 128, 0.08);
+}
+
+.domain-societas-bg:hover {
+    background-color: rgba(218, 165, 32, 0.12);
+}
+
+.domain-aesthetica-bg:hover {
+    background-color: rgba(219, 112, 147, 0.12);
+}
+
+.domain-chronos-bg:hover {
+    background-color: rgba(101, 67, 33, 0.1);
 }
 
 .accent-text {
@@ -573,18 +628,18 @@ body {
 
 .domain-concept-card,
 .domain-info-card {
-    background: rgba(26, 26, 26, 0.03);
+    background: rgba(26, 26, 26, 0.04);
     border: 1px solid rgba(26, 26, 26, 0.1);
     padding: 1.5rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    border-radius: 4px;
 }
 
 .domain-concept-card:hover,
 .domain-info-card:hover {
-    background: rgba(139, 0, 0, 0.05);
-    border-color: var(--oxblood);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .domain-info-card h3 {

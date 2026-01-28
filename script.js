@@ -61,7 +61,7 @@ function renderDomainListView() {
 
     Object.entries(DOMAINS).forEach(([name, desc]) => {
         const card = document.createElement('div');
-        card.className = 'domain-info-card';
+        card.className = `domain-info-card domain-${name.toLowerCase()}-bg`;
         card.innerHTML = `
             <h3>${name}</h3>
             <p>${desc}</p>
@@ -88,7 +88,7 @@ function renderDomainView(domainName) {
 
         concepts.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'domain-concept-card';
+            card.className = `domain-concept-card domain-${domainName.toLowerCase()}-bg`;
             card.innerHTML = `
                 <div class="concept-card-label">${item.label}</div>
                 <div class="concept-card-genus">${item.genus}</div>
