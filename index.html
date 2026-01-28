@@ -18,19 +18,12 @@
         <!-- Site Header -->
         <header class="site-header">
             <div class="header-left">
-                <svg class="site-logo" width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- 7 concentric rings -->
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="39" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="33" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="27" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="21" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2" />
-                    <circle cx="50" cy="50" r="9" fill="none" stroke="currentColor" stroke-width="2" />
-                </svg>
                 <div class="title-group">
                     <span class="site-title" onclick="navigateTo('home')">COSMOGRAPHIA</span>
                     <span class="site-subtitle">The Universal Lexicon</span>
+                    <nav class="header-nav">
+                        <span class="nav-link" onclick="navigateTo('domain-list')">DOMAINS</span>
+                    </nav>
                 </div>
             </div>
             <a href="https://simonallmer.com" class="back-link" target="_top">Back to SA</a>
@@ -39,14 +32,15 @@
         <!-- Home View (Search & Map Placeholder) -->
         <section id="home-view" class="view-section">
             <div class="home-scroll-container">
+                <img src="cosmographia_emblem_white.jpg" alt="Cosmographia Emblem" class="home-emblem">
+
                 <div class="search-container">
-                    <input type="text" id="concept-search" placeholder="Search the Archipelago..." autocomplete="off">
+                    <input type="text" id="concept-search" placeholder="Search the Lexicon..." autocomplete="off">
                     <div id="search-results" class="search-results"></div>
                 </div>
 
                 <div class="home-content">
                     <h1 class="home-title">A Cartography of Everything</h1>
-                    <div class="launch-date">Draft Version | Launching February 2026</div>
 
                     <h2 class="home-subtitle">The Mission</h2>
                     <p class="home-text">Cosmographia is a lexicon designed to bring
@@ -132,6 +126,20 @@
             </div>
         </section>
 
+        <!-- Domain List View -->
+        <section id="domain-list-view" class="view-section hidden">
+            <div class="domain-scroll-container">
+                <header class="domain-header">
+                    <h1 class="domain-title">THE SEVEN DOMAINS</h1>
+                    <p class="domain-text">The lexicon is divided into seven fundamental dimensions of reality, each
+                        mapping a specific realm of existence and human understanding.</p>
+                </header>
+                <div id="domains-full-list" class="domain-listing">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </section>
+
         <!-- Core View (Definition) -->
         <main id="core-view" class="view-section core-view hidden">
             <!-- Sidebar / Exclusions -->
@@ -173,6 +181,13 @@
                     </div>
                 </div>
 
+                <div class="hierarchy-container">
+                    <h3>Hierarchy</h3>
+                    <div id="hierarchy-list" class="hierarchy-grid">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+
                 <div class="comparisons-container">
                     <h3>Architecture of Difference</h3>
                     <div id="comparisons-list">
@@ -181,11 +196,11 @@
                 </div>
 
                 <div class="visual-container">
-                    <h3>The Cosmograph</h3>
+                    <h3>Cosmograph</h3>
                     <div id="vector-diagram" class="vector-stage">
                         <!-- SVG Rendering -->
                     </div>
-                    <div class="diagram-caption">Result = [Book]</div>
+                    <div class="diagram-caption">[Concept]</div>
                 </div>
             </section>
         </main>

@@ -75,6 +75,27 @@ body {
 .title-group {
     display: flex;
     flex-direction: column;
+    gap: 0.2rem;
+}
+
+.header-nav {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.nav-link:hover {
+    opacity: 1;
+    color: var(--oxblood);
 }
 
 .site-title {
@@ -117,7 +138,7 @@ body {
 .view-section {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 .hidden {
@@ -243,6 +264,24 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     font-weight: 500;
+}
+
+.home-emblem {
+    display: block;
+    max-width: 100%;
+    width: 600px;
+    height: auto;
+    margin: 0 auto 3rem auto;
+    mix-blend-mode: multiply;
+    filter: contrast(1.1) brightness(1.05);
+    /* Helps "push" off-white background to pure white for better multiply blending */
+    border: none;
+    padding: 0;
+    transition: transform 0.3s ease;
+}
+
+.home-emblem:hover {
+    transform: scale(1.02);
 }
 
 .home-illustration {
@@ -472,6 +511,7 @@ body {
 
 .constraints-container h3,
 .essential-container h3,
+.hierarchy-container h3,
 .comparisons-container h3,
 .visual-container h3 {
     font-family: var(--font-heading);
@@ -522,6 +562,44 @@ body {
     color: var(--accent-color);
     font-size: 0.8rem;
     font-style: italic;
+}
+
+.domain-listing {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.domain-concept-card,
+.domain-info-card {
+    background: rgba(26, 26, 26, 0.03);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.domain-concept-card:hover,
+.domain-info-card:hover {
+    background: rgba(139, 0, 0, 0.05);
+    border-color: var(--oxblood);
+    transform: translateY(-2px);
+}
+
+.domain-info-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--oxblood);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.domain-info-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.8;
 }
 
 /* Essential Components */
@@ -876,6 +954,10 @@ body.embed-mode .view-section {
     color: var(--text-secondary);
 }
 
+.hierarchy-container {
+    margin-bottom: 3rem;
+}
+
 .hierarchy-item {
     display: flex;
     align-items: center;
@@ -910,13 +992,15 @@ body.embed-mode .view-section {
 .clickable-domain {
     cursor: pointer;
     text-decoration: underline;
-    text-decoration-color: var(--border-color);
+    text-decoration-color: var(--border-strong);
     transition: color 0.2s;
 }
 
 .clickable-domain:hover {
     color: var(--accent-color);
 }
+
+
 
 .home-list li {
     cursor: pointer;

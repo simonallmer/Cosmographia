@@ -9,13 +9,14 @@ genus: Affective Deprivation State
 
 **Domain:** Psyche (The Internal Domain)
 **Genus:** Affective Deprivation State
+**Related to:** [Jealousy](lex-0059-jealousy)
 
 ## Definition
 A feeling of discontented or resentful longing aroused by someone else's possessions, qualities, or luck. It is the "shadow" of social comparison.
 
 ## Logical Constraints
 - **Relational:** Does it require an "Other"? Yes (If no → Frustration)
-- **Deprivation:** Does it stem from a perceived lack? Yes
+- **Deprivation:** Does it stem from a perceived lack? Yes (If no → Jealousy)
 - **Affect:** Is it painful/unpleasant? Yes
 
 ## Essential Components
@@ -24,7 +25,7 @@ A feeling of discontented or resentful longing aroused by someone else's possess
 - **Resentment:** The emotional weight assigned to the comparison.
 
 ## Architecture of Difference
-- **vs. Jealousy:** Jealousy is the fear of losing what you *have*; Envy is the pain of not having what you *see*.
+- **vs. Jealousy:** [Envy](lex-0042-envy) is when you want something that someone else has; [Jealousy](lex-0059-jealousy) is when you don't want others to have something—or someone—that you do.
 - **vs. Ambition:** Ambition is the drive to gain; Envy is the focus on the other's possession.
 
 ## Examples

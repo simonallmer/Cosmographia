@@ -27,18 +27,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function navigateTo(viewId, payload = null) {
     const homeView = document.getElementById('home-view');
+    const domainListView = document.getElementById('domain-list-view');
     const domainView = document.getElementById('domain-view');
     const coreView = document.getElementById('core-view');
     const exampleDrawer = document.getElementById('example-drawer');
 
     // Hide all
-    [homeView, domainView, coreView].forEach(v => v.classList.add('hidden'));
+    [homeView, domainListView, domainView, coreView].forEach(v => {
+        if (v) v.classList.add('hidden');
+    });
     if (exampleDrawer) exampleDrawer.style.display = 'none';
 
     if (viewId === 'home') {
         homeView.classList.remove('hidden');
         document.getElementById('concept-search').value = '';
         document.getElementById('concept-search').focus();
+    } else if (viewId === 'domain-list') {
+        document.getElementById('domain-list-view').classList.remove('hidden');
+        renderDomainListView();
     } else if (viewId === 'domain') {
         domainView.classList.remove('hidden');
         if (payload) renderDomainView(payload);
@@ -49,31 +55,48 @@ function navigateTo(viewId, payload = null) {
     }
 }
 
+function renderDomainListView() {
+    const container = document.getElementById('domains-full-list');
+    container.innerHTML = '';
+
+    Object.entries(DOMAINS).forEach(([name, desc]) => {
+        const card = document.createElement('div');
+        card.className = 'domain-info-card';
+        card.innerHTML = `
+            <h3>${name}</h3>
+            <p>${desc}</p>
+        `;
+        card.onclick = () => navigateTo('domain', name);
+        container.appendChild(card);
+    });
+}
 function renderDomainView(domainName) {
     const titleEl = document.getElementById('domain-title');
     const descEl = document.getElementById('domain-description');
     const container = document.getElementById('domain-concepts-container');
 
-    titleEl.textContent = domainName;
-    descEl.textContent = DOMAINS[domainName] || "A core field of human knowledge.";
+    if (titleEl) titleEl.textContent = domainName;
+    if (descEl) descEl.textContent = DOMAINS[domainName] || "A core field of human knowledge.";
 
-    container.innerHTML = '';
+    if (container) {
+        container.innerHTML = '';
 
-    // Filter concepts by domain
-    const concepts = Object.values(COSMOGRAPHIA_DATA).filter(item =>
-        item.relations.map_coordinates.domain === domainName
-    );
+        // Filter concepts by domain
+        const concepts = Object.values(COSMOGRAPHIA_DATA).filter(item =>
+            item.relations.map_coordinates.domain === domainName
+        );
 
-    concepts.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'domain-concept-card';
-        card.innerHTML = `
-            <div class="concept-card-label">${item.label}</div>
-            <div class="concept-card-genus">${item.genus}</div>
-        `;
-        card.onclick = () => navigateTo('concept', item.uid);
-        container.appendChild(card);
-    });
+        concepts.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'domain-concept-card';
+            card.innerHTML = `
+                <div class="concept-card-label">${item.label}</div>
+                <div class="concept-card-genus">${item.genus}</div>
+            `;
+            card.onclick = () => navigateTo('concept', item.uid);
+            container.appendChild(card);
+        });
+    }
 }
 
 function setupSearch() {
@@ -141,6 +164,30 @@ function renderSearchResults(matches, container) {
     container.style.display = 'block';
 }
 
+/**
+ * Scans text for concept labels and wraps them in clickable hierarchy links.
+ */
+function linkifyText(text) {
+    if (!text) return "";
+    let result = text;
+
+    // Sort concepts by label length descending to handle potential overlap
+    const sortedConcepts = Object.values(COSMOGRAPHIA_DATA).sort((a, b) => b.label.length - a.label.length);
+
+    // We use a simplified regex approach here.
+    sortedConcepts.forEach(concept => {
+        const label = concept.label;
+        const regex = new RegExp(`\\b${label}\\b`, 'g');
+        // Simple avoid double-wrapping by checking if already preceded by navigation call
+        // (This is a naive check but works for this specific dataset)
+        if (!result.includes(`'${concept.uid}'`)) {
+            result = result.replace(regex, `<span class="hierarchy-link" onclick="navigateTo('concept', '${concept.uid}')">${label}</span>`);
+        }
+    });
+
+    return result;
+}
+
 function loadConcept(uid) {
     const data = COSMOGRAPHIA_DATA[uid];
     if (!data) return;
@@ -186,7 +233,7 @@ function loadConcept(uid) {
     }
 
     // 2. Definition
-    document.getElementById('definition-text').textContent = data.definition.primary_text;
+    document.getElementById('definition-text').innerHTML = linkifyText(data.definition.primary_text);
 
     // 3. Constraints
     const constraintsContainer = document.getElementById('constraints-active');
@@ -209,14 +256,24 @@ function loadConcept(uid) {
         const li = document.createElement('li');
         li.className = 'exclusion-item';
         li.innerHTML = `
-            <div>Not a ${ex.target}</div>
-            <span class="exclusion-target">${ex.reason}</span>
+            <div>Not a ${linkifyText(ex.target)}</div>
+            <span class="exclusion-target">${linkifyText(ex.reason)}</span>
         `;
         exclusionList.appendChild(li);
     });
 
 
-    // 5. Essential Components
+    // 5. Hierarchy
+    const hierarchyList = document.getElementById('hierarchy-list');
+    hierarchyList.innerHTML = '';
+    if (data.relations.explicit_hierarchy) {
+        const div = document.createElement('div');
+        div.className = 'hierarchy-display';
+        div.innerHTML = linkifyText(data.relations.explicit_hierarchy);
+        hierarchyList.appendChild(div);
+    }
+
+    // 6. Essential Components
     const essentialList = document.getElementById('essential-list');
     essentialList.innerHTML = '';
     if (data.definition.essential_components) {
@@ -238,8 +295,8 @@ function loadConcept(uid) {
         const div = document.createElement('div');
         div.className = 'structural-comparison';
         div.innerHTML = `
-            <div class="comparison-header">${data.label} vs. ${comp.versus}</div>
-            <div class="comparison-text">${comp.text}</div>
+            <div class="comparison-header">${data.label} vs. ${linkifyText(comp.versus)}</div>
+            <div class="comparison-text">${linkifyText(comp.text)}</div>
         `;
         comparisonsList.appendChild(div);
     });
@@ -284,7 +341,9 @@ function renderSVG(uid = null) {
     const inkAccent = "#8B0000"; // Oxblood
     const inkFaint = "#8C8C8C";
 
-    if (uid.includes('book')) {
+    let isDefault = false;
+
+    if (uid.includes('technica-book')) {
         // BOOK: Substrate + Binding + n>=49
         const rect = document.createElementNS(svgNS, "rect");
         rect.setAttribute("x", "100"); rect.setAttribute("y", "20");
@@ -306,24 +365,95 @@ function renderSVG(uid = null) {
         text.setAttribute("font-family", "JetBrains Mono"); text.setAttribute("font-size", "12");
         text.textContent = "{ n ≥ 49 }"; svg.appendChild(text);
     }
-    else if (uid.includes('human')) {
-        // HUMAN: Axis + Reach + Circle
+    else if (uid.includes('metaphor')) {
+        // METAPHOR: Circle + Triangle + Dashed Bridge + Star
         const circle = document.createElementNS(svgNS, "circle");
-        circle.setAttribute("cx", "150"); circle.setAttribute("cy", "100");
-        circle.setAttribute("r", "70"); circle.setAttribute("fill", "none");
-        circle.setAttribute("stroke", inkFaint); circle.setAttribute("stroke-dasharray", "4");
-        svg.appendChild(circle);
+        circle.setAttribute("cx", "100"); circle.setAttribute("cy", "100"); circle.setAttribute("r", "40");
+        circle.setAttribute("fill", "none"); circle.setAttribute("stroke", inkPrimary); svg.appendChild(circle);
 
-        const spine = document.createElementNS(svgNS, "line");
-        spine.setAttribute("x1", "150"); spine.setAttribute("y1", "40");
-        spine.setAttribute("x2", "150"); spine.setAttribute("y2", "160");
-        spine.setAttribute("stroke", inkPrimary); spine.setAttribute("stroke-width", "3");
-        svg.appendChild(spine);
+        const triangle = document.createElementNS(svgNS, "polygon");
+        triangle.setAttribute("points", "200,60 240,140 160,140");
+        triangle.setAttribute("fill", "none"); triangle.setAttribute("stroke", inkPrimary); svg.appendChild(triangle);
 
-        const arms = document.createElementNS(svgNS, "line");
-        arms.setAttribute("x1", "100"); arms.setAttribute("y1", "80");
-        arms.setAttribute("x2", "200"); arms.setAttribute("y2", "80");
-        arms.setAttribute("stroke", inkAccent); svg.appendChild(arms);
+        const bridge = document.createElementNS(svgNS, "path");
+        bridge.setAttribute("d", "M 140 100 Q 150 80 160 100");
+        bridge.setAttribute("fill", "none"); bridge.setAttribute("stroke", inkAccent);
+        bridge.setAttribute("stroke-dasharray", "4"); svg.appendChild(bridge);
+
+        const star = document.createElementNS(svgNS, "path");
+        star.setAttribute("d", "M 150 70 L 155 85 L 170 85 L 158 95 L 162 110 L 150 100 L 138 110 L 142 95 L 130 85 L 145 85 Z");
+        star.setAttribute("fill", inkAccent); star.setAttribute("opacity", "0.6"); svg.appendChild(star);
+    }
+    else if (uid.includes('rhythm')) {
+        // RHYTHM: Horizontal Line + Vertical Ticks
+        const line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", "50"); line.setAttribute("y1", "100");
+        line.setAttribute("x2", "250"); line.setAttribute("y2", "100");
+        line.setAttribute("stroke", inkPrimary); svg.appendChild(line);
+
+        const pattern = [0, 20, 40, 70, 90, 110, 150, 170, 190, 220, 240];
+        pattern.forEach((x, i) => {
+            const tick = document.createElementNS(svgNS, "line");
+            tick.setAttribute("x1", 50 + x); tick.setAttribute("y1", "90");
+            tick.setAttribute("x2", 50 + x); tick.setAttribute("y2", "110");
+            tick.setAttribute("stroke", i % 3 === 0 ? inkAccent : inkFaint);
+            tick.setAttribute("stroke-width", i % 3 === 0 ? "2" : "1");
+            svg.appendChild(tick);
+        });
+    }
+    else if (uid.includes('melody')) {
+        // MELODY: Stepped Line + Peak/Trough Nodes
+        const path = document.createElementNS(svgNS, "path");
+        const points = [[50, 130], [80, 100], [110, 110], [140, 70], [170, 90], [200, 50], [230, 80], [250, 70]];
+        let d = `M ${points[0][0]} ${points[0][1]}`;
+        for (let i = 1; i < points.length; i++) {
+            d += ` L ${points[i][0]} ${points[i][1]}`;
+        }
+        path.setAttribute("d", d); path.setAttribute("fill", "none");
+        path.setAttribute("stroke", inkFaint); svg.appendChild(path);
+
+        points.forEach((p, i) => {
+            const c = document.createElementNS(svgNS, "circle");
+            c.setAttribute("cx", p[0]); c.setAttribute("cy", p[1]);
+            c.setAttribute("r", "4"); c.setAttribute("fill", i % 2 === 0 ? inkAccent : inkPrimary);
+            svg.appendChild(c);
+        });
+    }
+    else if (uid.includes('harmony')) {
+        // HARMONY: Vertical Lines + Bracket + Wave
+        const xPos = [130, 150, 170];
+        const heights = [60, 90, 70];
+        xPos.forEach((x, i) => {
+            const l = document.createElementNS(svgNS, "line");
+            l.setAttribute("x1", x); l.setAttribute("y1", 100 - heights[i] / 2);
+            l.setAttribute("x2", x); l.setAttribute("y2", 100 + heights[i] / 2);
+            l.setAttribute("stroke", inkPrimary); l.setAttribute("stroke-width", "2");
+            svg.appendChild(l);
+        });
+
+        const bracket = document.createElementNS(svgNS, "path");
+        bracket.setAttribute("d", "M 120 50 L 110 50 L 110 150 L 120 150");
+        bracket.setAttribute("fill", "none"); bracket.setAttribute("stroke", inkFaint);
+        svg.appendChild(bracket);
+
+        const wave = document.createElementNS(svgNS, "path");
+        wave.setAttribute("d", "M 50 100 Q 100 50, 150 100 T 250 100");
+        wave.setAttribute("fill", "none"); wave.setAttribute("stroke", inkAccent);
+        wave.setAttribute("stroke-width", "2"); wave.setAttribute("opacity", "0.5");
+        svg.appendChild(wave);
+    }
+    else if (uid.includes('beat')) {
+        // BEAT: Single Pulsing Pulse
+        const c = document.createElementNS(svgNS, "circle");
+        c.setAttribute("cx", "150"); c.setAttribute("cy", "100"); c.setAttribute("r", "5");
+        c.setAttribute("fill", inkAccent); svg.appendChild(c);
+
+        for (let i = 1; i < 4; i++) {
+            const r = document.createElementNS(svgNS, "circle");
+            r.setAttribute("cx", "150"); r.setAttribute("cy", "100"); r.setAttribute("r", i * 20);
+            r.setAttribute("fill", "none"); r.setAttribute("stroke", inkFaint);
+            r.setAttribute("stroke-dasharray", "2"); svg.appendChild(r);
+        }
     }
     else if (uid.includes('music')) {
         // MUSIC: Waves + Timeline
@@ -353,7 +483,7 @@ function renderSVG(uid = null) {
         hex.setAttribute("fill", "none"); hex.setAttribute("stroke", inkFaint);
         svg.appendChild(hex);
     }
-    else if (uid.includes('love')) {
+    else if (uid === 'lex-0007-love') {
         // LOVE: Overlapping
         const c1 = document.createElementNS(svgNS, "circle");
         c1.setAttribute("cx", "130"); c1.setAttribute("cy", "100"); c1.setAttribute("r", "50");
@@ -382,18 +512,6 @@ function renderSVG(uid = null) {
         arrow.setAttribute("stroke", inkAccent); arrow.setAttribute("stroke-width", "4");
         svg.appendChild(arrow);
     }
-    else if (uid.includes('coolness')) {
-        // COOLNESS: Pillar + Swirls
-        const pillar = document.createElementNS(svgNS, "rect");
-        pillar.setAttribute("x", "140"); pillar.setAttribute("y", "40");
-        pillar.setAttribute("width", "20"); pillar.setAttribute("height", "120");
-        pillar.setAttribute("fill", inkPrimary); svg.appendChild(pillar);
-
-        const horizon = document.createElementNS(svgNS, "line");
-        horizon.setAttribute("x1", "50"); horizon.setAttribute("y1", "80");
-        horizon.setAttribute("x2", "250"); horizon.setAttribute("y2", "80");
-        horizon.setAttribute("stroke", inkAccent); svg.appendChild(horizon);
-    }
     else if (uid.includes('fun')) {
         // FUN: Bubble + Nodes
         const bubble = document.createElementNS(svgNS, "circle");
@@ -410,19 +528,6 @@ function renderSVG(uid = null) {
             node.setAttribute("r", "4"); node.setAttribute("fill", inkAccent);
             svg.appendChild(node);
         }
-    }
-    else if (uid.includes('occupation')) {
-        // OCCUPATION: Gear (simulated) + Center Square
-        const rect = document.createElementNS(svgNS, "rect");
-        rect.setAttribute("x", "130"); rect.setAttribute("y", "80");
-        rect.setAttribute("width", "40"); rect.setAttribute("height", "40");
-        rect.setAttribute("fill", inkPrimary); svg.appendChild(rect);
-
-        const outer = document.createElementNS(svgNS, "circle");
-        outer.setAttribute("cx", "150"); outer.setAttribute("cy", "100");
-        outer.setAttribute("r", "60"); outer.setAttribute("fill", "none");
-        outer.setAttribute("stroke", inkFaint); outer.setAttribute("stroke-dasharray", "10 5");
-        outer.setAttribute("stroke-width", "10"); svg.appendChild(outer);
     }
 
     else if (uid.includes('atom')) {
@@ -475,21 +580,30 @@ function renderSVG(uid = null) {
         m.setAttribute("stroke", inkAccent); m.setAttribute("stroke-width", "2"); svg.appendChild(m);
     }
     else if (uid.includes('contrast')) {
+        // CONTRAST: Square divided diagonally
         const rect = document.createElementNS(svgNS, "rect");
         rect.setAttribute("x", "75"); rect.setAttribute("y", "25");
         rect.setAttribute("width", "150"); rect.setAttribute("height", "150");
-        rect.setAttribute("fill", inkPrimary); svg.appendChild(rect);
-        const tri = document.createElementNS(svgNS, "polygon");
-        tri.setAttribute("points", "75,25 225,25 225,175");
-        tri.setAttribute("fill", "#FFF"); svg.appendChild(tri);
+        rect.setAttribute("fill", "none"); rect.setAttribute("stroke", inkPrimary); svg.appendChild(rect);
+
+        const block = document.createElementNS(svgNS, "polygon");
+        block.setAttribute("points", "75,175 225,175 75,25");
+        block.setAttribute("fill", inkPrimary); svg.appendChild(block);
     }
     else if (uid.includes('texture')) {
-        for (let i = 0; i < 100; i++) {
-            const dot = document.createElementNS(svgNS, "circle");
-            dot.setAttribute("cx", 50 + Math.random() * 200); dot.setAttribute("cy", 50 + Math.random() * 100);
-            dot.setAttribute("r", 0.5 + Math.random() * 2);
-            dot.setAttribute("fill", Math.random() > 0.5 ? inkAccent : inkFaint);
-            svg.appendChild(dot);
+        // TEXTURE: 5x5 grid of varied dots
+        for (let r = 0; r < 5; r++) {
+            for (let c = 0; c < 5; c++) {
+                const dot = document.createElementNS(svgNS, "circle");
+                const x = 90 + c * 30;
+                const y = 40 + r * 30;
+                const size = 2 + Math.random() * 6;
+                dot.setAttribute("cx", x); dot.setAttribute("cy", y);
+                dot.setAttribute("r", size);
+                dot.setAttribute("fill", (r + c) % 2 === 0 ? inkAccent : inkPrimary);
+                dot.setAttribute("opacity", 0.3 + Math.random() * 0.7);
+                svg.appendChild(dot);
+            }
         }
     }
     else if (uid.includes('trust')) {
@@ -505,6 +619,58 @@ function renderSVG(uid = null) {
         bridge.setAttribute("stroke-width", "3"); bridge.setAttribute("stroke-dasharray", "4");
         svg.appendChild(bridge);
     }
+    else if (uid.includes('emoticon')) {
+        // EMOTICON: Sideways Type Face
+        const text = document.createElementNS(svgNS, "text");
+        text.setAttribute("x", "150"); text.setAttribute("y", "100");
+        text.setAttribute("text-anchor", "middle"); text.setAttribute("dominant-baseline", "middle");
+        text.setAttribute("fill", inkPrimary); text.setAttribute("font-family", "Courier New, monospace");
+        text.setAttribute("font-size", "70"); text.setAttribute("font-weight", "bold");
+        text.setAttribute("transform", "rotate(90, 150, 100)");
+        text.textContent = ";P"; svg.appendChild(text);
+
+        const line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", "100"); line.setAttribute("y1", "150");
+        line.setAttribute("x2", "200"); line.setAttribute("y2", "150");
+        line.setAttribute("stroke", inkFaint); line.setAttribute("stroke-dasharray", "4");
+        svg.appendChild(line);
+    }
+    else if (uid.includes('emoji')) {
+        // EMOJI: Graphical Face
+        const face = document.createElementNS(svgNS, "circle");
+        face.setAttribute("cx", "150"); face.setAttribute("cy", "100"); face.setAttribute("r", "60");
+        face.setAttribute("fill", "none"); face.setAttribute("stroke", inkPrimary);
+        face.setAttribute("stroke-width", "2"); svg.appendChild(face);
+
+        // Eyes
+        for (let x of [130, 170]) {
+            const eye = document.createElementNS(svgNS, "circle");
+            eye.setAttribute("cx", x); eye.setAttribute("cy", "80"); eye.setAttribute("r", "4");
+            eye.setAttribute("fill", inkPrimary); svg.appendChild(eye);
+        }
+
+        // Mouth
+        const mouth = document.createElementNS(svgNS, "line");
+        mouth.setAttribute("x1", "120"); mouth.setAttribute("y1", "120");
+        mouth.setAttribute("x2", "180"); mouth.setAttribute("y2", "120");
+        mouth.setAttribute("stroke", inkPrimary); mouth.setAttribute("stroke-width", "2");
+        svg.appendChild(mouth);
+    }
+    else if (uid.includes('kaomoji')) {
+        // KAOMOJI: Upright Elaborate (Shrug)
+        const text = document.createElementNS(svgNS, "text");
+        text.setAttribute("x", "150"); text.setAttribute("y", "100");
+        text.setAttribute("text-anchor", "middle"); text.setAttribute("dominant-baseline", "middle");
+        text.setAttribute("fill", inkPrimary); text.setAttribute("font-family", "Arial, sans-serif");
+        text.setAttribute("font-size", "30");
+        text.textContent = "¯\\_(ツ)_/¯"; svg.appendChild(text);
+
+        const accentLine = document.createElementNS(svgNS, "path");
+        accentLine.setAttribute("d", "M 80 120 Q 150 160 220 120");
+        accentLine.setAttribute("fill", "none"); accentLine.setAttribute("stroke", inkAccent);
+        accentLine.setAttribute("stroke-width", "2"); accentLine.setAttribute("stroke-dasharray", "5");
+        svg.appendChild(accentLine);
+    }
     else if (uid.includes('empathy')) {
         for (let i = 0; i < 2; i++) {
             const wave = document.createElementNS(svgNS, "path");
@@ -515,6 +681,7 @@ function renderSVG(uid = null) {
         }
     }
     else {
+        isDefault = true;
         // DEFAULT: Geometric Abstract
         const rect = document.createElementNS(svgNS, "rect");
         rect.setAttribute("x", "100"); rect.setAttribute("y", "50");
@@ -529,6 +696,15 @@ function renderSVG(uid = null) {
     }
 
     // Caption update
-    document.querySelector('.diagram-caption').textContent = `Result = [${data.label}]`;
+    const captionEl = document.querySelector('.diagram-caption');
+    if (captionEl) {
+        if (isDefault) {
+            captionEl.textContent = "Cosmograph coming soon";
+        } else if (uid.includes('book')) {
+            captionEl.textContent = `Result = [${data.label}]`;
+        } else {
+            captionEl.textContent = `[${data.label}]`;
+        }
+    }
     stage.appendChild(svg);
 }

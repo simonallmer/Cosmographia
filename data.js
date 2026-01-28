@@ -58,6 +58,7 @@ const COSMOGRAPHIA_DATA = {
             "visual_construction": "Central Axis + Horizontal Reach + Enclosing Circle"
         },
         "relations": {
+            "explicit_hierarchy": "Human ⊃ { Man, Woman }",
             "exclusions": [
                 { "target": "Artificial Intelligence", "reason": "Lacks biological substrate." },
                 { "target": "Non-Human Animal", "reason": "Lacks symbolic reasoning threshold." }
@@ -75,6 +76,70 @@ const COSMOGRAPHIA_DATA = {
         "examples": [
             { "title": "The Individual", "description": "The atomic unit of the Human species." },
             { "title": "Richard Nixon", "description": "The Human as a historical and political node." }
+        ]
+    },
+    "lex-0057-man": {
+        "uid": "lex-0057-man",
+        "label": "Man",
+        "genus": "Male Human Subtype",
+        "definition": {
+            "primary_text": "A male human being, characterized by biological, social, and psychological traits typical of the male sex within the human species.",
+            "logical_constraints": [
+                { "attribute": "Set", "question": "Human?", "value": "Yes", "fail_redirect": "Non-Human" },
+                { "attribute": "Sex", "question": "Male?", "value": "Yes", "fail_redirect": "Woman" }
+            ],
+            "essential_components": [
+                { "name": "Biological Stature", "description": "Typical male physiological characteristics." },
+                { "name": "Identity", "description": "The internal and social recognition of being a man." }
+            ],
+            "visual_construction": "Coming Soon"
+        },
+        "relations": {
+            "parent": "lex-0002-human",
+            "explicit_hierarchy": "Man ⊂ Human",
+            "exclusions": [
+                { "target": "Woman", "reason": "Distinguished by sex and associated markers." }
+            ],
+            "map_coordinates": {
+                "domain": "Materia",
+                "island": "Life Forms",
+                "neighbors": ["Human", "Woman", "Boy"]
+            }
+        },
+        "examples": [
+            { "title": "Adam", "description": "Archetypal man." }
+        ]
+    },
+    "lex-0058-woman": {
+        "uid": "lex-0058-woman",
+        "label": "Woman",
+        "genus": "Female Human Subtype",
+        "definition": {
+            "primary_text": "A female human being, characterized by biological, social, and psychological traits typical of the female sex within the human species.",
+            "logical_constraints": [
+                { "attribute": "Set", "question": "Human?", "value": "Yes", "fail_redirect": "Non-Human" },
+                { "attribute": "Sex", "question": "Female?", "value": "Yes", "fail_redirect": "Man" }
+            ],
+            "essential_components": [
+                { "name": "Biological Stature", "description": "Typical female physiological characteristics." },
+                { "name": "Identity", "description": "The internal and social recognition of being a woman." }
+            ],
+            "visual_construction": "Coming Soon"
+        },
+        "relations": {
+            "parent": "lex-0002-human",
+            "explicit_hierarchy": "Woman ⊂ Human",
+            "exclusions": [
+                { "target": "Man", "reason": "Distinguished by sex and associated markers." }
+            ],
+            "map_coordinates": {
+                "domain": "Materia",
+                "island": "Life Forms",
+                "neighbors": ["Human", "Man", "Girl"]
+            }
+        },
+        "examples": [
+            { "title": "Eve", "description": "Archetypal woman." }
         ]
     },
     "lex-0003-music": {
@@ -733,7 +798,7 @@ const COSMOGRAPHIA_DATA = {
         "label": "Epoch",
         "genus": "Temporal Unit",
         "definition": {
-            "primary_text": "A particular period of time in history or a person's life, typically one marked by notable events or particular characteristics.",
+            "primary_text": "A period of time in history or a person's life, typically marked by notable events or particular characteristics.",
             "logical_constraints": [
                 { "attribute": "Duration", "question": "Is it prolonged?", "value": "Yes", "fail_redirect": "Event" },
                 { "attribute": "Character", "question": "Is it distinct?", "value": "Yes", "fail_redirect": "Mere Span" },
@@ -809,7 +874,7 @@ const COSMOGRAPHIA_DATA = {
             ],
             "essential_components": [
                 { "name": "Perception", "description": "The intake of data from the environment." },
-                { "name": "Attention", "description": "The selective focusing on data streams." },
+                { "name": "Attention", "description": "The selective focusing on specific data streams." },
                 { "name": "Memory", "description": "The storage and retrieval of processed information." }
             ],
             "visual_construction": "Stylized Brain + Pulse Vectors + Three Regions"
@@ -1015,7 +1080,8 @@ const COSMOGRAPHIA_DATA = {
             ],
             "essential_components": [
                 { "name": "Nucleus", "description": "The dense center containing protons and neutrons." },
-                { "name": "Electrons", "description": "Negatively charged particles in orbital shells." }
+                { "name": "Electrons", "description": "Negatively charged particles in orbital shells." },
+                { "name": "Empty Space", "description": "The vast volume between the nucleus and the shells." }
             ],
             "visual_construction": "Central Nucleus + Orbital Shells"
         },
@@ -1038,8 +1104,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Bonding", "question": "Are units connected?", "value": "Yes", "fail_redirect": "Mixture" }
             ],
             "essential_components": [
-                { "name": "Atomic Nodes", "description": "The individual atoms forming the unit." },
-                { "name": "Bonds", "description": "Electromagnetic forces of connection." }
+                { "name": "Atomic Nodes", "description": "The individual atoms that form the structure." },
+                { "name": "Bonds", "description": "The electromagnetic forces holding the nodes together." },
+                { "name": "Geometry", "description": "The specific spatial arrangement of the nodes." }
             ],
             "visual_construction": "Connected Node Network"
         },
@@ -1063,8 +1130,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Closure", "question": "Does it have a boundary?", "value": "Yes", "fail_redirect": "Liquid" }
             ],
             "essential_components": [
-                { "name": "Membrane", "description": "The protective outer layer." },
-                { "name": "Nucleus", "description": "The information center." }
+                { "name": "Membrane", "description": "The protective outer layer that regulates interaction." },
+                { "name": "Nucleus", "description": "The information center containing genetic blueprints." },
+                { "name": "Metabolism", "description": "The engine that converts energy into action." }
             ],
             "visual_construction": "Membrane Boundary + Central Nucleus"
         },
@@ -1160,8 +1228,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Persistence", "question": "Stays true at scale?", "value": "Yes", "fail_redirect": "Specific" }
             ],
             "essential_components": [
-                { "name": "Antecedent", "description": "The first term." },
-                { "name": "Consequent", "description": "The second term." }
+                { "name": "Antecedent", "description": "The first term in the relationship." },
+                { "name": "Consequent", "description": "The second term in the relationship." },
+                { "name": "The Colon (:)", "description": "The symbol of the divide between the two." }
             ],
             "visual_construction": "Dual Scalar Dots + Divider"
         },
@@ -1185,8 +1254,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Harmony", "question": "Is it balanced?", "value": "Yes", "fail_redirect": "Asymmetry" }
             ],
             "essential_components": [
-                { "name": "Ratios", "description": "The constituent relationships." },
-                { "name": "Balance", "description": "The state of equality." }
+                { "name": "The Extremes", "description": "The outer terms of the proportion." },
+                { "name": "The Means", "description": "The inner terms of the proportion." },
+                { "name": "The Golden Rule", "description": "The principle of correct relationship." }
             ],
             "visual_construction": "Mirrored Scalar Balance"
         },
@@ -1324,18 +1394,20 @@ const COSMOGRAPHIA_DATA = {
         "label": "Envy",
         "genus": "Affective Deprivation State",
         "definition": {
-            "primary_text": "A feeling of discontented longing aroused by someone else's possessions or qualities.",
+            "primary_text": "A feeling of discontented or resentful longing aroused by someone else's possessions, qualities, or luck.",
             "logical_constraints": [
                 { "attribute": "Relational", "question": "Requires an Other?", "value": "Yes", "fail_redirect": "Frustration" },
-                { "attribute": "Deprivation", "question": "Perceived lack?", "value": "Yes", "fail_redirect": "Pride" }
+                { "attribute": "Deprivation", "question": "Perceived lack?", "value": "Yes", "fail_redirect": "Jealousy" }
             ],
             "essential_components": [
-                { "name": "The Void", "description": "The gap in one's own status." },
-                { "name": "The Idealized Other", "description": "The possessor of the desired object." }
+                { "name": "The Idealized Other", "description": "The person who possesses what the observer lacks." },
+                { "name": "The Void", "description": "The perceived gap in the observer's own status or possessions." },
+                { "name": "Resentment", "description": "The emotional weight assigned to the comparison." }
             ],
             "visual_construction": "Hollow Circle + Jagged Vector + Solid Circle"
         },
         "relations": {
+            "neighbors": ["lex-0059-jealousy"],
             "map_coordinates": { "domain": "Psyche", "island": "Emotions", "neighbors": ["Boredom", "Nostalgia"] }
         },
         "examples": [
@@ -1348,14 +1420,15 @@ const COSMOGRAPHIA_DATA = {
         "label": "Boredom",
         "genus": "Attention Deficit State",
         "definition": {
-            "primary_text": "The state of feeling weary through lack of interest in one's environment.",
+            "primary_text": "The state of feeling weary and restless through lack of interest in one's current activity or environment.",
             "logical_constraints": [
                 { "attribute": "Under-stimulation", "question": "Lack of challenge?", "value": "Yes", "fail_redirect": "Self-Reflection" },
                 { "attribute": "Restlessness", "question": "Desire for change?", "value": "Yes", "fail_redirect": "Zen" }
             ],
             "essential_components": [
-                { "name": "Lost Attention", "description": "Inability to anchor the mind." },
-                { "name": "Temporal Dilation", "description": "Perception of slowing time." }
+                { "name": "Low Arousal", "description": "The lack of energetic engagement with the environment." },
+                { "name": "Lost Attention", "description": "The mind's inability to find a stable anchor point." },
+                { "name": "Temporal Dilation", "description": "The perception that time is moving more slowly." }
             ],
             "visual_construction": "Flat Horizon + Shallow Dip"
         },
@@ -1378,18 +1451,19 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Boundaries", "question": "Separate entity?", "value": "Yes", "fail_redirect": "Fusion" }
             ],
             "essential_components": [
-                { "name": "Mirroring", "description": "The internal reflection of another's state." },
-                { "name": "Cognition", "description": "The intellectual understanding of the other's context." }
+                { "name": "Cognitive Empathy", "description": "Understanding the other's perspective." },
+                { "name": "Affective Empathy", "description": "Mirroring the other's emotional response." },
+                { "name": "Compassion", "description": "The resulting desire to help or connect." }
             ],
-            "visual_construction": "Overlapping Pulses + Combined Amplitude"
+            "visual_construction": "Overlapping Identical Waves"
         },
         "relations": {
-            "parent": "lex-0007-love",
-            "map_coordinates": { "domain": "Psyche", "island": "Social Psyche", "neighbors": ["Love", "Trust"] }
+            "neighbors": ["lex-0007-love", "lex-0045-trust"],
+            "map_coordinates": { "domain": "Psyche", "island": "Social", "neighbors": ["Love", "Trust"] }
         },
         "examples": [
-            { "title": "Crying at Movies", "description": "Shared fictional affect." },
-            { "title": "Counseling", "description": "Professional practice of empathy." }
+            { "title": "Emotional Mirroring", "description": "Sharing another's pain." },
+            { "title": "Perspective Taking", "description": "Understanding why others act." }
         ]
     },
     "lex-0045-trust": {
@@ -1397,23 +1471,50 @@ const COSMOGRAPHIA_DATA = {
         "label": "Trust",
         "genus": "Social Predictive Reliance",
         "definition": {
-            "primary_text": "The firm belief in the reliability of someone or something in the face of uncertainty.",
+            "primary_text": "The firm belief in the reliability, truth, ability, or strength of someone or something in the face of uncertainty.",
             "logical_constraints": [
                 { "attribute": "Uncertainty", "question": "Risk exists?", "value": "Yes", "fail_redirect": "Knowledge" },
                 { "attribute": "Reliance", "question": "Will you act?", "value": "Yes", "fail_redirect": "Indifference" }
             ],
             "essential_components": [
-                { "name": "Consistency", "description": "Pattern of past reliability." },
-                { "name": "Benevolence", "description": "Belief in lack of harm." }
+                { "name": "Benevolence", "description": "The belief that the other intends no harm." },
+                { "name": "Competence", "description": "The belief that the other has the ability to act." },
+                { "name": "Consistency", "description": "The history of past reliability." }
             ],
             "visual_construction": "Support Pillars + Bridged Gap"
         },
         "relations": {
-            "map_coordinates": { "domain": "Psyche", "island": "Social Psyche", "neighbors": ["Empathy", "Treaty"] }
+            "map_coordinates": { "domain": "Psyche", "island": "Social", "neighbors": ["Empathy", "Treaty"] }
         },
         "examples": [
             { "title": "Market Confidence", "description": "Trust in currency value." },
             { "title": "Friendship", "description": "Interpersonal trust." }
+        ]
+    },
+    "lex-0059-jealousy": {
+        "uid": "lex-0059-jealousy",
+        "label": "Jealousy",
+        "genus": "Affective Preservation State",
+        "definition": {
+            "primary_text": "The state of being resentfully suspicious of a rival or an excessive guarding of the attentions or possessions one currently enjoys.",
+            "logical_constraints": [
+                { "attribute": "Possession", "question": "Currently enjoy object?", "value": "Yes", "fail_redirect": "Envy" },
+                { "attribute": "Threat", "question": "Perceive a rival?", "value": "Yes", "fail_redirect": "Peace" }
+            ],
+            "essential_components": [
+                { "name": "The Enjoyed Object", "description": "The relationship, quality, or possession currently held." },
+                { "name": "The Rival", "description": "The perceived threat to that possession." },
+                { "name": "Suspicion", "description": "The undue focus on the potential for loss." }
+            ],
+            "visual_construction": "Protected Node + External Threat"
+        },
+        "relations": {
+            "neighbors": ["lex-0042-envy"],
+            "map_coordinates": { "domain": "Psyche", "island": "Emotions", "neighbors": ["Envy", "Love"] }
+        },
+        "examples": [
+            { "title": "Social Guarding", "description": "Protecting a valued relationship." },
+            { "title": "Divine Jealousy", "description": "Exodus 20:5: Exclusive worship." }
         ]
     },
     "lex-0046-tax": {
@@ -1427,8 +1528,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Authority", "question": "Is it sovereign?", "value": "Yes", "fail_redirect": "Theft" }
             ],
             "essential_components": [
-                { "name": "The Levy", "description": "The percentage taken from the base." },
-                { "name": "Public Utility", "description": "The shared infrastructure funded." }
+                { "name": "The Levy", "description": "The specific percentage or amount taken." },
+                { "name": "The Base", "description": "What the tax is applied to (income, property, consumption)." },
+                { "name": "Public Utility", "description": "The pooling of resources for infrastructure." }
             ],
             "visual_construction": "Fractured Coins + Wedge Separation"
         },
@@ -1451,8 +1553,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Bindingness", "question": "Creates obligation?", "value": "Yes", "fail_redirect": "Advice" }
             ],
             "essential_components": [
-                { "name": "Protocol", "description": "The specific terms." },
-                { "name": "Sovereignty", "description": "The authority of the signers." }
+                { "name": "The Protocol", "description": "The specific terms of the agreement." },
+                { "name": "The Ratification", "description": "The formal acceptance by the parties." },
+                { "name": "The Sunset Clause", "description": "The conditions under which the agreement ends." }
             ],
             "visual_construction": "Conjoined Parchments + Shared Seal"
         },
@@ -1476,8 +1579,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Transferability", "question": "Can be sold?", "value": "Yes", "fail_redirect": "Endline" }
             ],
             "essential_components": [
-                { "name": "The Boundary", "description": "The limit of jurisdiction." },
-                { "name": "The Asset", "description": "The resource held." }
+                { "name": "The Owner", "description": "The entity holding the right." },
+                { "name": "The Asset", "description": "The resource being owned (Materia or Technica)." },
+                { "name": "The Boundary", "description": "The limit of the owner's jurisdiction over the asset." }
             ],
             "visual_construction": "Asset Box + Perimeter Ticks"
         },
@@ -1501,8 +1605,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Juxtaposition", "question": "Viewed together?", "value": "Yes", "fail_redirect": "Isolation" }
             ],
             "essential_components": [
-                { "name": "Polarity", "description": "The extremes compared." },
-                { "name": "Boundary", "description": "The edge of distinction." }
+                { "name": "The Polarities", "description": "The two extremes (e.g., Black vs. White, Loud vs. Quiet)." },
+                { "name": "The Boundary", "description": "The edge where the two values meet." },
+                { "name": "The Intensity", "description": "The magnitude of the difference." }
             ],
             "visual_construction": "Diagonal Split + B/W Contrast"
         },
@@ -1525,8 +1630,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Frequency", "question": "Is pattern regular?", "value": "Usually", "fail_redirect": "Chaos" }
             ],
             "essential_components": [
-                { "name": "The Unit", "description": "The repeating element." },
-                { "name": "Roughness", "description": "Vertical variation magnitude." }
+                { "name": "The Unit", "description": "The fundamental repeating element of the texture." },
+                { "name": "The Roughness", "description": "The vertical variation (height) of the surface." },
+                { "name": "The Rhythm", "description": "The frequency of the variations." }
             ],
             "visual_construction": "Dotted Grid + Jitter Scale"
         },
@@ -1549,8 +1655,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Sequence", "question": "In a series?", "value": "Yes", "fail_redirect": "Batch" }
             ],
             "essential_components": [
-                { "name": "Year Block", "description": "The ten constituent cycles." },
-                { "name": "Zeitgeist", "description": "The social coloring of the span." }
+                { "name": "The Year One", "description": "The starting point of the span." },
+                { "name": "The Culmination", "description": "The tenth year." },
+                { "name": "The Spirit (Zeitgeist)", "description": "The social coloring often assigned to a decade." }
             ],
             "visual_construction": "Decimal Segment + End Markers"
         },
@@ -1574,8 +1681,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Continuity", "question": "Stable lineage?", "value": "Yes", "fail_redirect": "Interregnum" }
             ],
             "essential_components": [
-                { "name": "Centuries", "description": "The ten primary subdivisions." },
-                { "name": "Trans-human Scale", "description": "Duration exceeding individual life x10." }
+                { "name": "Centuries", "description": "The ten subdivisions of the millennium." },
+                { "name": "The Turn", "description": "The transition from one millennium to the next (e.g., Y2K)." },
+                { "name": "Civilizational Flow", "description": "The rise and fall of systems within the thousand-year span." }
             ],
             "visual_construction": "Dense 10x10 Grid (Total 1000 Representation)"
         },
@@ -1598,8 +1706,9 @@ const COSMOGRAPHIA_DATA = {
                 { "attribute": "Conservation", "question": "Is it consumed?", "value": "No", "fail_redirect": "Fuel" }
             ],
             "essential_components": [
-                { "name": "Threshold Reduction", "description": "Lowering the energy required for start." },
-                { "name": "Intermediary Bond", "description": "Temporary connection during event." }
+                { "name": "Lowering of Activation Energy", "description": "The reduction of the \"effort\" required to start a process." },
+                { "name": "Intermediary State", "description": "The temporary bond formed during the peak of interaction." },
+                { "name": "Recovery", "description": "The return of the catalyst to its original state after the event." }
             ],
             "visual_construction": "Arch Dip + Path Shortener"
         },
@@ -1609,6 +1718,108 @@ const COSMOGRAPHIA_DATA = {
         "examples": [
             { "title": "Enzymes", "description": "Biological catalysts." },
             { "title": "Charisma", "description": "Social catalyst for movement." }
+        ]
+    },
+    "lex-0054-emoticon": {
+        "uid": "lex-0054-emoticon",
+        "label": "Emoticon",
+        "genus": "Typographic Symbolic Sequence",
+        "definition": {
+            "primary_text": "A pictorial representation of a facial expression using punctuation marks, numbers, and letters, usually written in a sideways orientation.",
+            "logical_constraints": [
+                { "attribute": "Substrate", "question": "Typographic?", "value": "Yes", "fail_redirect": "Emoji" },
+                { "attribute": "Orientation", "question": "Sideways?", "value": "Yes", "fail_redirect": "Kaomoji" },
+                { "attribute": "Standardization", "question": "Unicode Glyph?", "value": "No", "fail_redirect": "Glyph" }
+            ],
+            "essential_components": [
+                { "name": "Typography", "description": "The use of standard keyboard characters." },
+                { "name": "Sequence", "description": "The specific order that creates the visual pattern." },
+                { "name": "Abstract Representation", "description": "The mental mapping from type to emotion." }
+            ],
+            "visual_construction": "Typographic Segment + Punctuation Face"
+        },
+        "relations": {
+            "exclusions": [
+                { "target": "Emoji", "reason": "Emoticons are built from type; Emojis are pre-rendered graphics." },
+                { "target": "Symbol", "reason": "Symbols are single units; Emoticons are composite sequences." }
+            ],
+            "map_coordinates": {
+                "domain": "Technica",
+                "island": "Information Formats",
+                "neighbors": ["Emoji", "Kaomoji", "Language"]
+            }
+        },
+        "examples": [
+            { "title": ";P", "description": "A classic winking-tongue emoticon." },
+            { "title": ":)", "description": "The foundational smiling face." }
+        ]
+    },
+    "lex-0055-emoji": {
+        "uid": "lex-0055-emoji",
+        "label": "Emoji",
+        "genus": "Graphical Symbolic Unit",
+        "definition": {
+            "primary_text": "A small digital image or icon used to express an idea or emotion. Unlike emoticons, emojis are standardized Unicode characters rendered as full-color graphics.",
+            "logical_constraints": [
+                { "attribute": "Substrate", "question": "Graphical?", "value": "Yes", "fail_redirect": "Emoticon" },
+                { "attribute": "Standardization", "question": "Unicode?", "value": "Yes", "fail_redirect": "Custom Sticke" },
+                { "attribute": "Atomic", "question": "Single Character?", "value": "Yes", "fail_redirect": "Illustration" }
+            ],
+            "essential_components": [
+                { "name": "Pixel/Vector Data", "description": "The graphical representation." },
+                { "name": "Unicode Code Point", "description": "The standardized numeric ID." },
+                { "name": "Semantic Intent", "description": "The specific emotion or object represented." }
+            ],
+            "visual_construction": "Solid Circle + Graphical Features"
+        },
+        "relations": {
+            "exclusions": [
+                { "target": "Emoticon", "reason": "Emojis are graphics; Emoticons use type." },
+                { "target": "Icon", "reason": "Icons are often system-specific; Emojis are globally standardized." }
+            ],
+            "map_coordinates": {
+                "domain": "Technica",
+                "island": "Information Formats",
+                "neighbors": ["Emoticon", "Standardization", "Communication"]
+            }
+        },
+        "examples": [
+            { "title": "😂", "description": "Face with Tears of Joy." },
+            { "title": "❤️", "description": "Red Heart." }
+        ]
+    },
+    "lex-0056-kaomoji": {
+        "uid": "lex-0056-kaomoji",
+        "label": "Kaomoji",
+        "genus": "Elaborate Upright Emoticon",
+        "definition": {
+            "primary_text": "A style of emoticon originating in Japan that uses characters from various scripts, including katakana and kanji, to create complex, upright facial expressions and actions.",
+            "logical_constraints": [
+                { "attribute": "Orientation", "question": "Upright?", "value": "Yes", "fail_redirect": "Western Emoticon" },
+                { "attribute": "Complexity", "question": "Script Hybridity?", "value": "Yes", "fail_redirect": "Standard Type" },
+                { "attribute": "Origin", "question": "East Asian?", "value": "Yes", "fail_redirect": "SMILEY" }
+            ],
+            "essential_components": [
+                { "name": "Multi-Script Type", "description": "Mix of Latin, Japanese, and specialized punctuation." },
+                { "name": "Upright Layout", "description": "Not requiring the reader to tilt their head." },
+                { "name": "Extended Context", "description": "Often including arms or objects." }
+            ],
+            "visual_construction": "Extended Horizontal + Upright Central Vector"
+        },
+        "relations": {
+            "exclusions": [
+                { "target": "Emoticon", "reason": "Kaomoji are upright; Western emoticons are sideways." },
+                { "target": "Emoji", "reason": "Kaomoji are still composed of text characters." }
+            ],
+            "map_coordinates": {
+                "domain": "Technica",
+                "island": "Information Formats",
+                "neighbors": ["Emoticon", "Japan", "Communication"]
+            }
+        },
+        "examples": [
+            { "title": "¯\\_(ツ)_/¯", "description": "The classic shrugging kaomoji." },
+            { "title": "(╯°□°）╯︵ ┻━┻", "description": "The table flip expression." }
         ]
     }
 };
