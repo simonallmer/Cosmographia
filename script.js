@@ -8,6 +8,9 @@ const DOMAINS = {
     "Chronos": "The Temporal Domain. The lineage of eras and events, mapping our position in the flow of time."
 };
 
+const navigationHistory = [];
+let currentHistoryIndex = -1;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Determine start view. If URL has hash, load that. Otherwise Home.
     const urlParams = new URLSearchParams(window.location.search);
@@ -18,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateTo('home');
     setupSearch();
     renderSVG();
+    updateNavButtons();
 
     // Update Home Stats
     const count = Object.keys(COSMOGRAPHIA_DATA).length;
@@ -31,6 +35,19 @@ function navigateTo(viewId, payload = null) {
     const domainView = document.getElementById('domain-view');
     const coreView = document.getElementById('core-view');
     const exampleDrawer = document.getElementById('example-drawer');
+
+    const entry = { view: viewId, payload };
+    
+    if (currentHistoryIndex < navigationHistory.length - 1) {
+        navigationHistory.splice(currentHistoryIndex + 1);
+    }
+    
+    const lastEntry = navigationHistory[navigationHistory.length - 1];
+    if (!lastEntry || lastEntry.view !== entry.view || lastEntry.payload !== entry.payload) {
+        navigationHistory.push(entry);
+        currentHistoryIndex = navigationHistory.length - 1;
+    }
+    updateNavButtons();
 
     // Hide all
     [homeView, domainListView, domainView, coreView].forEach(v => {
@@ -52,6 +69,65 @@ function navigateTo(viewId, payload = null) {
         coreView.classList.remove('hidden');
         if (exampleDrawer) exampleDrawer.style.display = 'block';
         if (payload) loadConcept(payload);
+    }
+}
+
+function goBack() {
+    if (currentHistoryIndex > 0) {
+        currentHistoryIndex--;
+        const entry = navigationHistory[currentHistoryIndex];
+        navigateToDirect(entry.view, entry.payload);
+        updateNavButtons();
+    }
+}
+
+function goForward() {
+    if (currentHistoryIndex < navigationHistory.length - 1) {
+        currentHistoryIndex++;
+        const entry = navigationHistory[currentHistoryIndex];
+        navigateToDirect(entry.view, entry.payload);
+        updateNavButtons();
+    }
+}
+
+function navigateToDirect(viewId, payload = null) {
+    const homeView = document.getElementById('home-view');
+    const domainListView = document.getElementById('domain-list-view');
+    const domainView = document.getElementById('domain-view');
+    const coreView = document.getElementById('core-view');
+    const exampleDrawer = document.getElementById('example-drawer');
+
+    [homeView, domainListView, domainView, coreView].forEach(v => {
+        if (v) v.classList.add('hidden');
+    });
+    if (exampleDrawer) exampleDrawer.style.display = 'none';
+
+    if (viewId === 'home') {
+        homeView.classList.remove('hidden');
+    } else if (viewId === 'domain-list') {
+        document.getElementById('domain-list-view').classList.remove('hidden');
+        renderDomainListView();
+    } else if (viewId === 'domain') {
+        domainView.classList.remove('hidden');
+        if (payload) renderDomainView(payload);
+    } else if (viewId === 'concept') {
+        coreView.classList.remove('hidden');
+        if (exampleDrawer) exampleDrawer.style.display = 'block';
+        if (payload) loadConcept(payload);
+    }
+}
+
+function updateNavButtons() {
+    const backBtn = document.getElementById('nav-back');
+    const fwdBtn = document.getElementById('nav-forward');
+    
+    if (backBtn) {
+        backBtn.style.opacity = currentHistoryIndex > 0 ? '1' : '0.3';
+        backBtn.style.pointerEvents = currentHistoryIndex > 0 ? 'auto' : 'none';
+    }
+    if (fwdBtn) {
+        fwdBtn.style.opacity = currentHistoryIndex < navigationHistory.length - 1 ? '1' : '0.3';
+        fwdBtn.style.pointerEvents = currentHistoryIndex < navigationHistory.length - 1 ? 'auto' : 'none';
     }
 }
 

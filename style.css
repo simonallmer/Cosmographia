@@ -116,6 +116,31 @@ body {
     letter-spacing: 0;
 }
 
+.nav-arrows {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+}
+
+.nav-arrow {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    opacity: 0.3;
+    pointer-events: none;
+    user-select: none;
+}
+
+.nav-arrow:hover {
+    border-color: var(--text-primary);
+    background-color: var(--surface-color);
+    color: var(--accent-color);
+}
+
 .back-link {
     font-family: var(--font-body);
     font-size: 0.85rem;
