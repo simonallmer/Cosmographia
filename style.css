@@ -884,6 +884,11 @@ body.embed-mode .view-section {
     .header-left {
         flex-direction: column;
         gap: 0.5rem;
+        align-items: center;
+    }
+
+    .title-group {
+        align-items: center;
     }
 
     .site-title {
